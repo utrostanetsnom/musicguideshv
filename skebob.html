@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Из шума — в We Will Rock You</title>
+  <style>
+    :root {
+      --bg: #f5f5f4;
+      --surface: rgba(255,255,255,0.92);
+      --surface-strong: #ffffff;
+      --line: #e7e5e4;
+      --text: #1c1917;
+      --muted: #57534e;
+      --soft: #78716c;
+      --accent: #111827;
+      --shadow: 0 10px 30px rgba(28, 25, 23, 0.06);
+      --radius: 28px;
+      --radius-sm: 18px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.85), transparent 35%),
+        linear-gradient(180deg, #fafaf9 0%, #f5f5f4 100%);
+      line-height: 1.65;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, #fafaf9 0%, #ffffff 40%, #f5f5f4 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 85% 15%, rgba(17,24,39,0.06), transparent 22%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      padding: 72px 0 88px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 8px 14px;
+      border: 1px solid #d6d3d1;
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.86);
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 18px 0 0;
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      max-width: 860px;
+      margin: 26px 0 0;
+      font-size: clamp(18px, 2.2vw, 22px);
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .card, .tile, .timeline-item, .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .card {
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .stat {
+      border-radius: 20px;
+      padding: 18px 20px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .stat small {
+      display: block;
+      color: var(--soft);
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .stat strong {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    main {
+      padding: 40px 0 72px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .grid-2-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .spaced {
+      margin-top: 18px;
+    }
+
+    .quote-box {
+      margin-top: 28px;
+      padding: 22px;
+      border-radius: 22px;
+      background: #f5f5f4;
+      border: 1px solid var(--line);
+    }
+
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .tile {
+      border-radius: 22px;
+      padding: 20px;
+      background: #fafaf9;
+    }
+
+    .tile p {
+      margin-top: 10px;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .stack {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .soft-box {
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: #f5f5f4;
+      border: 1px solid var(--line);
+    }
+
+    .soft-box p {
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .timeline {
+      margin-top: 28px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      border-radius: 22px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .time {
+      font-weight: 700;
+      color: var(--soft);
+      font-size: 14px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding-top: 4px;
+    }
+
+    .script-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      background: #fafaf9;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .table-wrap {
+      margin-top: 24px;
+      overflow: hidden;
+      border-radius: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #fafaf9;
+      color: var(--text);
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    td {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    .note-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .note-list .soft-box { background: white; }
+
+    .footer-card {
+      margin-top: 24px;
+    }
+
+    @media (max-width: 1100px) {
+      .tiles { grid-template-columns: repeat(2, 1fr); }
+      .grid-2, .grid-2-equal { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .hero-inner { padding: 52px 0 60px; }
+      .stats { grid-template-columns: 1fr; }
+      .container { width: min(var(--max), calc(100% - 20px)); }
+      .card { padding: 22px; border-radius: 24px; }
+      .tiles { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+      .table-wrap { overflow-x: auto; }
+      table { min-width: 760px; }
+      p { font-size: 16px; }
+      .hero-inner > div[style*='grid-template-columns:1.15fr 0.85fr'] { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-inner">
+      <h1>«Из шума — в <em>We Will Rock You</em>»</h1>
+      <p class="lead">
+        Я разработала этот номер как лагерную постановку, вдохновившись материалом Arzamas о том,
+        как шум вошёл в музыку и как любой звук может стать средством выразительности. Это номер о том,
+        как хаос постепенно превращается в ритм, а ритм — в общее сценическое действие, которое объединяет участников и зал.
+      </p>
+      <div style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:18px;margin-top:30px;align-items:stretch;">
+        <div style="border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow);background:white;min-height:320px;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Queen_-_montagem.png" alt="Коллаж с участниками Queen на сцене" style="display:block;width:100%;height:100%;object-fit:cover;" />
+        </div>
+        <div style="display:grid;gap:18px;">
+          <div style="border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow);background:white;min-height:150px;display:flex;align-items:center;justify-content:center;padding:16px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Queen_members_montage.png" alt="Коллаж с музыкантами Queen" style="display:block;width:100%;height:100%;object-fit:cover;" />
+          </div>
+          <div style="border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(180deg,#ffffff 0%,#f5f5f4 100%);padding:22px;display:flex;flex-direction:column;justify-content:center;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Sound_wave_holding_shape_-_Large_01.svg" alt="Графическая звуковая волна" style="display:block;width:100%;height:auto;max-height:120px;object-fit:contain;" />
+            <p style="margin-top:14px;font-size:15px;line-height:1.8;color:var(--muted);">
+              Визуально сайт поддерживает ту же идею, что и номер: от звука и ритма — к узнаваемому музыкальному импульсу.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px;color:var(--soft);font-size:13px;line-height:1.7;">
+        Изображения: Wikimedia Commons · коллажи Queen и графика звуковой волны.
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <small>Возраст</small>
+          <strong>10–15 лет</strong>
+        </div>
+        <div class="stat">
+          <small>Длительность</small>
+          <strong>4–5 минут</strong>
+        </div>
+        <div class="stat">
+          <small>Формат</small>
+          <strong>Шумовой оркестр + флешмоб</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="grid-2">
+        <article class="card">
+          <h2>О чём этот номер</h2>
+          <p class="spaced">
+            В основе постановки — идея, что музыка рождается не только из мелодии, но и из повседневных звуков:
+            шагов, хлопков, шуршания, стука, дыхания и голосов. Сначала на сцене существует только разрозненный шум,
+            но постепенно участники начинают слышать друг друга, собираться в единый ритм и выводить его в узнаваемую форму.
+            Финалом становится общий флешмоб под <em>We Will Rock You</em>, в который включается не только сцена, но и зрительный зал.
+          </p>
+          <div class="quote-box">
+            <h3>Логлайн</h3>
+            <p class="spaced">
+              Из хаотичных звуков повседневности рождается единый ритм, который превращает разрозненную группу детей
+              в мощный живой флешмоб и вовлекает весь зал в общий музыкальный импульс.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Почему я выбрала этот материал</h2>
+          <p class="spaced">
+            Меня вдохновила мысль о том, что граница между шумом и музыкой условна. Любой звук может стать выразительным,
+            если услышать в нём ритм и смысл. Для лагеря это особенно ценно: детям не нужны специальные музыкальные навыки,
+            чтобы стать частью сильного сценического высказывания. Они не просто повторяют готовую хореографию, а сами создают музыку
+            из того, что им знакомо и доступно.
+          </p>
+          <p class="spaced">
+            Кроме того, мне близка идея коллективного музицирования: номер строится не вокруг одного солиста,
+            а вокруг общего действия, где важен каждый участник. Именно поэтому постановка получается живой, современной
+            и очень подходящей для детского лагеря.
+          </p>
+        </article>
+      </section>
+
+      <section class="section card">
+        <h2>Источник вдохновения</h2>
+        <p class="spaced">
+          Основой для этой постановки стал материал Arzamas о том, как шум вошёл в музыку и как в XX веке изменилось представление о музыкальном звуке.
+          Именно этот материал подсказал мне главную идею номера: показать, что музыка может родиться из самых обычных звуков повседневности.
+        </p>
+        <p class="spaced">
+          Ссылка на материал: <a href="https://arzamas.academy/courses/25/1" target="_blank" rel="noopener noreferrer" style="color:#111827;font-weight:600;text-decoration:none;border-bottom:1px solid #111827;">Arzamas — курс, на который опирается номер</a>
+        </p>
+      </section>
+
+      <section class="section card">
+        <h2>Как идеи материала адаптированы для лагеря</h2>
+        <div class="tiles">
+          <div class="tile">
+            <h3>Любой звук может стать музыкой</h3>
+            <p>В номере используются шаги, хлопки, шуршание бумаги, стук по коробкам, щелчки и голосовые акценты.</p>
+          </div>
+          <div class="tile">
+            <h3>От хаоса к ритму</h3>
+            <p>Сначала участники существуют отдельно, затем постепенно собираются в единый рисунок.</p>
+          </div>
+          <div class="tile">
+            <h3>Коллективное действие</h3>
+            <p>Постановка строится на командной работе, внимании друг к другу и общей энергии сцены.</p>
+          </div>
+          <div class="tile">
+            <h3>Понятный зрителю финал</h3>
+            <p>Финал выходит в узнаваемый ритм и превращает номер в флешмоб, который легко считывается залом.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section grid-2-equal">
+        <article class="card">
+          <h2>Практическая информация</h2>
+          <div class="stack">
+            <div class="soft-box">
+              <h3>Количество участников</h3>
+              <p class="spaced">Оптимально 12–18 человек.</p>
+            </div>
+            <div class="soft-box">
+              <h3>Реквизит</h3>
+              <p class="spaced">Листы плотной бумаги, небольшие коробки, связка ключей или другой предмет с лёгким звоном, однотонная одежда в нейтральной гамме.</p>
+            </div>
+            <div class="soft-box">
+              <h3>Форма работы</h3>
+              <p class="spaced">Первые минуты номер идёт на живых звуках детей, затем переходит в ритм <em>We Will Rock You</em> и превращается в флешмоб.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Структура номера</h2>
+          <div class="stack">
+            <div class="soft-box">
+              <h3>1. Хаос</h3>
+              <p class="spaced">На сцене появляются разрозненные бытовые звуки: шаги, шорох, хлопки, редкие удары.</p>
+            </div>
+            <div class="soft-box">
+              <h3>2. Поиск ритма</h3>
+              <p class="spaced">Один участник запускает рисунок «топ — топ — хлопок», который постепенно начинают подхватывать остальные.</p>
+            </div>
+            <div class="soft-box">
+              <h3>3. Объединение</h3>
+              <p class="spaced">Сцена собирается в единый пульс, а хаос превращается в узнаваемую ритмическую структуру.</p>
+            </div>
+            <div class="soft-box">
+              <h3>4. Флешмоб</h3>
+              <p class="spaced">Подключается <em>We Will Rock You</em>, и номер переходит в мощное коллективное действие.</p>
+            </div>
+            <div class="soft-box">
+              <h3>5. Финал</h3>
+              <p class="spaced">Участники собирают зал в общий ритм и завершают номер сильной общей точкой.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section card">
+        <h2>Поминутный план постановки</h2>
+        <div class="timeline">
+          <div class="timeline-item"><div class="time">0:00–0:20</div><div><p>Пустая сцена. Один участник выходит в центр и создаёт первый звук шагами. Важно выдержать паузу и ощущение ожидания.</p></div></div>
+          <div class="timeline-item"><div class="time">0:20–0:45</div><div><p>Постепенно выходят остальные участники и добавляют свои звуки: шуршание, хлопки, стук, шаги. Пока никто не синхронизируется.</p></div></div>
+          <div class="timeline-item"><div class="time">0:45–1:15</div><div><p>Хаос усиливается. Участники перемещаются по диагоналям и создают ощущение разрозненной звуковой среды.</p></div></div>
+          <div class="timeline-item"><div class="time">1:15–1:30</div><div><p>Резкая остановка. Один участник произносит: «Сначала это был просто шум».</p></div></div>
+          <div class="timeline-item"><div class="time">1:30–1:50</div><div><p>Один ребёнок начинает рисунок «топ — топ — хлопок». Сначала тихо и почти случайно, затем его поддерживают ещё несколько человек.</p></div></div>
+          <div class="timeline-item"><div class="time">1:50–2:10</div><div><p>Ритм постепенно захватывает всю сцену. Всё больше участников подключаются к рисунку.</p></div></div>
+          <div class="timeline-item"><div class="time">2:10–2:30</div><div><p>Вся группа собирается в полукруг и синхронно выполняет ритм. Это точка перехода от шума к музыке.</p></div></div>
+          <div class="timeline-item"><div class="time">2:30–2:40</div><div><p>Короткая пауза узнавания. Можно добавить тихую фразу или шёпот перед включением трека.</p></div></div>
+          <div class="timeline-item"><div class="time">2:40–3:10</div><div><p>Включается <em>We Will Rock You</em>. Все исполняют классический рисунок «топ — топ — хлопок» в едином темпе.</p></div></div>
+          <div class="timeline-item"><div class="time">3:10–3:30</div><div><p>Группа делится на блоки: одни держат ритм, другие добавляют body percussion и простые перестроения.</p></div></div>
+          <div class="timeline-item"><div class="time">3:30–3:50</div><div><p>Участники жестом вовлекают зал в общий ритм. Здесь особенно важны энергия и контакт со зрителем.</p></div></div>
+          <div class="timeline-item"><div class="time">3:50–4:30</div><div><p>Финальный сбор в общий строй, несколько циклов ритма, мощная финальная точка и фиксация.</p></div></div>
+        </div>
+      </section>
+
+      <section class="section card">
+        <h2>Полный поэпизодный сценарий по участникам</h2>
+        <p class="spaced">
+          Ниже — рабочая схема на 14 участников, по которой номер можно ставить почти без дополнительных пояснений.
+          Обозначения: А1, А2 — текстовые акценты; Б1, Б2, Б3, Б4 — группа шагов; В1, В2, В3 — группа хлопков и body percussion;
+          Г1, Г2, Г3 — группа предметных звуков; Д1, Д2 — пластика и связующие переходы.
+        </p>
+        <div class="script-header">
+          <span class="tag">А1, А2 — текст / образ</span>
+          <span class="tag">Б1–Б4 — шаги</span>
+          <span class="tag">В1–В3 — хлопки / body percussion</span>
+          <span class="tag">Г1–Г3 — предметный шум</span>
+          <span class="tag">Д1–Д2 — пластика / переходы</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Время</th>
+                <th>Кто</th>
+                <th>Что делает</th>
+                <th>Позиция на сцене</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0:00–0:20</td>
+                <td>А1</td>
+                <td>Выходит из левой кулисы, доходит до центра, делает два отдельных шага с паузами, смотрит в зал.</td>
+                <td>Центр сцены</td>
+              </tr>
+              <tr>
+                <td>0:20–0:45</td>
+                <td>Г1, В1, Б1, Г2, А2</td>
+                <td>Г1 шуршит бумагой справа. В1 выходит из глубины и даёт редкие хлопки по груди. Б1 добавляет медленные шаги слева. Г2 даёт два тихих удара по коробке. А2 выходит справа и наблюдает без текста.</td>
+                <td>Сцена постепенно заполняется, но участники стоят разрозненно</td>
+              </tr>
+              <tr>
+                <td>0:45–1:15</td>
+                <td>Б2, Б3, Б4, В2, В3, Г3, Д1, Д2</td>
+                <td>Б2–Б4 добавляют шаги в разных темпах. В2–В3 работают хлопками и щелчками. Г3 даёт лёгкий звон ключами. Д1 и Д2 проходят между участниками пластически, как будто проводят звук через пространство.</td>
+                <td>Диагонали, края и глубина сцены</td>
+              </tr>
+              <tr>
+                <td>1:15–1:30</td>
+                <td>Все, затем А2</td>
+                <td>Все резко замирают. А2 произносит: «Сначала это был просто шум». После короткой паузы — «Шаги. Шорох. Стук». На фоне Г1 делает тихий шорох, Б1 — один шаг, В1 — один хлопок.</td>
+                <td>Замершая композиция по всей сцене</td>
+              </tr>
+              <tr>
+                <td>1:30–1:50</td>
+                <td>Б2, затем В2, Б3, Г2</td>
+                <td>Б2 начинает ритм «топ — топ — хлопок» тихо и почти случайно. В2 добавляет хлопок в рисунок. Б3 поддерживает топы. Г2 подстраивает коробку под тот же ритм.</td>
+                <td>Ближе к центру, вокруг Б2 собирается внимание</td>
+              </tr>
+              <tr>
+                <td>1:50–2:10</td>
+                <td>Б1, Б4, В1, В3, Г1, Г3, Д1, Д2, А1</td>
+                <td>По очереди подключаются новые участники. Д1 и Д2 собирают пространство плавными движениями рук. А1 говорит: «Но если прислушаться — шум становится ритмом».</td>
+                <td>Переход от хаоса к полукругу</td>
+              </tr>
+              <tr>
+                <td>2:10–2:30</td>
+                <td>Все 14 участников</td>
+                <td>Вся группа встаёт в широкий полукруг и синхронно выполняет 4–6 циклов «топ — топ — хлопок».</td>
+                <td>Широкий полукруг лицом в зал</td>
+              </tr>
+              <tr>
+                <td>2:30–2:40</td>
+                <td>А1, А2, затем все</td>
+                <td>Короткая пауза. А1 и А2 вместе тихо говорят: «Слышишь?» После паузы вся группа шёпотом: «We will... rock you».</td>
+                <td>Полукруг сохраняется</td>
+              </tr>
+              <tr>
+                <td>2:40–3:10</td>
+                <td>Все</td>
+                <td>Включается трек. Все выполняют классический рисунок: правый топ, левый топ, хлопок. На каждом четвёртом цикле — небольшой шаг вперёд и возврат.</td>
+                <td>Полукруг, затем лёгкое движение вперёд</td>
+              </tr>
+              <tr>
+                <td>3:10–3:30</td>
+                <td>Б1–Б4, В1–В3, Г1, Г2, Г3, Д1, Д2, А1, А2</td>
+                <td>Б1–Б4 остаются в центре и держат ритм ногами. В1–В3 и Г1 выходят чуть вперёд и дают body percussion: хлопок по груди, хлопок в ладони, хлопок вверх. Г2, Г3, Д1, Д2, А1 и А2 делают простой пластический рисунок: шаг вправо, шаг влево, поворот, хлопок.</td>
+                <td>Сцена делится на три визуальных блока</td>
+              </tr>
+              <tr>
+                <td>3:30–3:50</td>
+                <td>А1, А2, все остальные</td>
+                <td>А1 жестом зовёт зал повторять ритм. А2 может сказать: «Вместе!» или «С нами!». Все остальные продолжают крупно и чётко держать ритм, глядя в зал.</td>
+                <td>Фронтально, с максимальным контактом со зрителем</td>
+              </tr>
+              <tr>
+                <td>3:50–4:10</td>
+                <td>Все</td>
+                <td>Участники собираются в две линии по 7 человек. Делают 4 цикла ритма: первые два — на месте, третий — шаг вперёд, четвёртый — хлопок с руками вверх.</td>
+                <td>Две ровные линии лицом в зал</td>
+              </tr>
+              <tr>
+                <td>4:10–4:30</td>
+                <td>А2, затем все</td>
+                <td>После мощного хлопка А2 произносит: «Музыка рождается там, где мы слышим друг друга». Затем вся группа делает ещё один общий «топ — топ — хлопок» и замирает в финальной точке.</td>
+                <td>Финальный общий строй</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section grid-2-equal">
+        <article class="card">
+          <h2>Текстовые акценты</h2>
+          <div class="note-list">
+            <div class="soft-box"><p>«Сначала это был просто шум»</p></div>
+            <div class="soft-box"><p>«Шаги. Шорох. Стук»</p></div>
+            <div class="soft-box"><p>«Но если прислушаться — шум становится ритмом»</p></div>
+            <div class="soft-box"><p>«Музыка рождается там, где мы слышим друг друга»</p></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Почему номер подходит для лагеря</h2>
+          <div class="note-list">
+            <div class="soft-box"><p>Он не требует сложной хореографии и доступен детям с разным уровнем подготовки.</p></div>
+            <div class="soft-box"><p>Он помогает включить в работу всех участников, даже тех, кто не любит сольные роли.</p></div>
+            <div class="soft-box"><p>Он выглядит современно, необычно и легко удерживает внимание зрителей.</p></div>
+            <div class="soft-box"><p>Он показывает, что искусство можно создавать из самых простых вещей, которые уже есть вокруг нас.</p></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section card footer-card">
+        <h2>Вывод</h2>
+        <p class="spaced">
+          Таким образом, номер «Из шума — в We Will Rock You» становится сценической адаптацией идеи о том,
+          что музыка рождается из окружающего мира. Через шумовой оркестр, ритм и флешмоб дети не просто показывают
+          выступление, а проживают процесс превращения хаоса в общее действие. Именно поэтому этот номер хорошо работает
+          в лагере: он объединяет, вовлекает и делает искусство понятным, живым и современным.
+        </p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
